@@ -16,8 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={raleway.className}>
-        <div id="#modal-container" />
+      <body className={raleway.className} suppressHydrationWarning>
         {children}
       </body>
     </html>

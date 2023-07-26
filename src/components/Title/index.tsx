@@ -1,4 +1,4 @@
-import classNames from 'classNames';
+import { twMerge } from 'tailwind-merge';
 
 type Props = {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ type Props = {
 const Title = ({ children, className }: Props) => {
   return (
     <h1
-      className={classNames(
+      className={twMerge(
         'text-4xl font-extrabold leading-none tracking-tight',
         className
       )}

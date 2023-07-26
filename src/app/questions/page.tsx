@@ -1,19 +1,18 @@
 import Container from '@/components/Container';
-import Input from '@/components/Input';
+import QuickQuestions from '@/components/QuickQuestions';
 import Title from '@/components/Title';
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main className="flex justify-center pt-12">
-      <Container>
-        <Container className="w-72">
-          <Title className="self-start">Quick questions</Title>
-
-          <form className="mt-8 w-full">
-            <Input id="question" label="Question" />
-          </form>
+    <>
+      <main className="flex justify-center pt-12">
+        <Container>
+          <Container className="w-72">
+            <Title className="self-start">Quick questions</Title>
+            <QuickQuestions />
+          </Container>
         </Container>
-      </Container>
-    </main>
+      </main>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import classNames from 'classNames';
+import { twMerge } from 'tailwind-merge';
 
 type Props = {
   children: React.ReactNode;
@@ -8,9 +8,9 @@ type Props = {
 const Container = ({ children, className }: Props) => {
   return (
     <div
-      className={classNames(
-        className,
-        'flex flex-col w-full max-w-[1920px] items-center'
+      className={twMerge(
+        'flex flex-col w-full max-w-[1920px] items-center',
+        className
       )}
     >
       {children}
