@@ -1,6 +1,6 @@
 'use client';
 import fetchMiddleware from '@/config/fetch';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Props = {
   checkOnLoad?: boolean;
@@ -9,13 +9,17 @@ type Props = {
 export const useApiHealth = (params: Props = {}) => {
   const { checkOnLoad } = params;
 
+  const mounted = useRef(false);
+
   const [isHealthy, setIsHealthy] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!checkOnLoad) {
+    if (!checkOnLoad || mounted.current) {
       return;
     }
+
+    mounted.current = true;
 
     checkApiHealth();
   }, [checkOnLoad]);
