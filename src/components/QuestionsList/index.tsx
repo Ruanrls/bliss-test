@@ -44,7 +44,7 @@ const QuestionsList = ({ questions, onReachEnd, isLoading }: Props) => {
                 callback={onIntersectEnd}
                 options={{
                   threshold: 1,
-                  rootMargin: '0px 0px 400px 0px',
+                  rootMargin: '0px 0px 600px 0px',
                 }}
               >
                 <div key={`${id}`} className="max-w-lg">
