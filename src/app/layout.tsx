@@ -1,3 +1,4 @@
+import NetworkWatchModal from '@/components/NetworkWatchModal';
 import type { Metadata } from 'next';
 import { Raleway } from 'next/font/google';
 import './globals.css';
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={raleway.className} suppressHydrationWarning>
+        <NetworkWatchModal />
         {children}
       </body>
     </html>
