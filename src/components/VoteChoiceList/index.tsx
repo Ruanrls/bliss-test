@@ -12,6 +12,8 @@ const VoteChoiceList = ({ question }: Props) => {
   const [questionState, setQuestionState] = useState<Question>(question);
   const [selectedChoice, setSelectedChoice] = useState<Choice>();
 
+  const [error, setError] = useState<string>();
+
   const handleVote = async (choice: Choice) => {
     setSelectedChoice(choice);
 
@@ -28,15 +30,23 @@ const VoteChoiceList = ({ question }: Props) => {
 
     setQuestionState(body);
 
-    fetchMiddleware.fetch(`/questions/${question.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(body),
-    });
+    try {
+      await fetchMiddleware.fetch(`/questions/${question.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+      });
+    } catch (e) {
+      setError(e as string);
+    }
   };
 
   const disableButtons = useMemo(() => {
     return selectedChoice !== undefined;
   }, [selectedChoice]);
+
+  if (error) {
+    throw new Error(error);
+  }
 
   return (
     <div className="mt-4 grid grid-cols-2 gap-2">
