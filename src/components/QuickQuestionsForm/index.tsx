@@ -21,23 +21,25 @@ const QuickQuestionsForm = () => {
     setQuestion(value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!question) return;
+
+    await fetchNextPage();
   };
 
   const { questions, fetchNextPage } = useQuestions({ filter: question });
 
   useEffect(
     function setMounted() {
-      if (!mounted.current) {
-        fetchNextPage();
-      }
-
-      mounted.current = true;
-
-      return () => {
-        mounted.current = false;
+      const mount = async () => {
+        if (!mounted.current) {
+          const fetched = await fetchNextPage();
+          console.log(fetched);
+          mounted.current = !!fetched;
+        }
       };
+
+      mount();
     },
     [fetchNextPage]
   );

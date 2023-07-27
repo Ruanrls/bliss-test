@@ -41,15 +41,16 @@ export const useQuestions = ({ filter }: UseQuestions = {}) => {
 
   const fetchNextPage = useCallback(async () => {
     if (!fetchQuestions) {
-      return;
+      return false;
     }
 
     setIsLoading(true);
     const data = await fetchQuestions.next();
-    if (data.done) return;
+    if (data.done) return data;
 
     setQuestions((prev) => [...prev, ...data.value]);
     setIsLoading(false);
+    return data;
   }, [fetchQuestions]);
 
   useEffect(
