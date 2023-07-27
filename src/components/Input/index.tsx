@@ -4,10 +4,11 @@ import { twMerge } from 'tailwind-merge';
 type Props = React.HTMLAttributes<HTMLInputElement> & {
   label?: string;
   value?: string;
+  type?: string;
 };
 
 const Input = (
-  { className, label, value, ...props }: Props,
+  { className, label, value, type = 'text', ...props }: Props,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   return (
@@ -19,6 +20,7 @@ const Input = (
       )}
       <input
         ref={ref}
+        type={type}
         className={twMerge(
           'py-1 px-2 font-medium text-md rounded-lg border border-gray-700 text-gray-700 focus:border-blue-500 focus:outline-blue-500',
           className

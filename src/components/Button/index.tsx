@@ -13,6 +13,7 @@ type Props = React.HTMLProps<HTMLButtonElement> & {
   variant?: ButtonVariants;
   isLoading?: boolean;
   loadingFallback?: React.ReactNode;
+  type?: 'button' | 'submit' | 'reset';
 };
 
 type FallbackProps = {
@@ -57,7 +58,7 @@ const Button = ({
         `relative px-4 py-2 text-white rounded flex justify-center hover:shadow-lg`,
         className
       )}
-      type="button"
+      type={buttonProps.type}
       disabled={!!isLoading || buttonProps.disabled}
     >
       <Loading
