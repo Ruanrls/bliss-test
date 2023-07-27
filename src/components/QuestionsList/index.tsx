@@ -1,5 +1,6 @@
 import { Question } from '@/types/question';
 import Image from 'next/image';
+import Link from 'next/link';
 import HorizontalCard from '../HorizontalCard';
 import Observer from '../Observer';
 
@@ -27,11 +28,13 @@ const QuestionsList = ({ questions, onReachEnd, isLoading }: Props) => {
           const isLastElement = questions.length - 1 === index;
 
           const Card = (
-            <HorizontalCard image={question.image_url}>
-              <h5 className="text-2xl font-bold tracking-tight text-gray-900">
-                {question.question}
-              </h5>
-            </HorizontalCard>
+            <Link href={`/questions/${question.id}`}>
+              <HorizontalCard image={question.image_url}>
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900">
+                  {question.question}
+                </h5>
+              </HorizontalCard>
+            </Link>
           );
 
           const id = `${question.id}-${index}`;
