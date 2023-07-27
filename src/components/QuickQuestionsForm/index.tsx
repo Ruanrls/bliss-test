@@ -41,7 +41,7 @@ const QuickQuestionsForm = ({ onFail }: Props) => {
   const onSearch = async () => {
     if (!question) return;
 
-    handleRequest(() => handleSearch(question));
+    handleRequest(async () => await handleSearch(question));
   };
 
   const { questions, fetchNextPage, isLoading, handleSearch } = useQuestions({
@@ -91,7 +91,7 @@ const QuickQuestionsForm = ({ onFail }: Props) => {
         />
         <Button
           className="w-full h-10 mt-4"
-          isLoading={false}
+          isLoading={isLoading}
           onClick={onSearch}
         >
           Search

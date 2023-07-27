@@ -57,7 +57,9 @@ export const useQuestions = ({ filter }: UseQuestions = {}) => {
   const handleSearch = useCallback(async (filter: string) => {
     const fetchQuestions = getPaginatedQuestions(DEFAULT_LIMIT, filter);
     setFetchQuestions(fetchQuestions);
+    setIsLoading(true);
     const data = await fetchQuestions.next();
+    setIsLoading(false);
 
     if (data.done) {
       return;

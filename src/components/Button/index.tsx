@@ -51,12 +51,14 @@ const Button = ({
       className={classNames(
         {
           'bg-blue-400 hover:bg-blue-500': variant === ButtonVariants.primary,
+          'hover:bg-blue-400': variant === ButtonVariants.primary && isLoading,
           'bg-red-400': variant === ButtonVariants.danger,
         },
         `relative px-4 py-2 text-white rounded flex justify-center hover:shadow-lg`,
         className
       )}
       type="button"
+      disabled={!!isLoading || buttonProps.disabled}
     >
       <Loading
         isLoading={!!isLoading}
