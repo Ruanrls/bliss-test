@@ -8,7 +8,7 @@ import Loading from '../Loading';
 import Modal from '../Modal';
 
 const ShareWidget = () => {
-  const [isOpened, setIsOpened] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
   const handleOpen = () => setIsOpened(true);
 
   const [email, setEmail] = useState('');
