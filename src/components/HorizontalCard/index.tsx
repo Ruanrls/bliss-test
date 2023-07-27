@@ -1,13 +1,24 @@
+import classNames from 'classnames';
 import Image from 'next/image';
 
 type Props = {
   image: string;
   children: React.ReactNode;
+  changeColorOnHover?: boolean;
 };
 
-const HorizontalCard = ({ image, children }: Props) => {
+const HorizontalCard = ({
+  image,
+  children,
+  changeColorOnHover = true,
+}: Props) => {
   return (
-    <div className="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+    <div
+      className={classNames(
+        'flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow',
+        { 'hover:bg-gray-100': changeColorOnHover }
+      )}
+    >
       <div className="relative w-80 h-44">
         <Image
           alt="Question"
