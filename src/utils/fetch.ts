@@ -43,7 +43,7 @@ export class Fetch {
     });
     const body = await response.json();
     if (body.status !== APIStatus.OK) {
-      return false;
+      throw new Error("API's health check failed");
     }
 
     return true;

@@ -7,9 +7,13 @@ import QuickQuestionsForm from '../QuickQuestionsForm';
 import UnhealthyApiModal from '../UnhealthyApiModal';
 
 const QuickQuestions = () => {
-  const { isHealthy, isLoading, checkApiHealth, setHealth } = useApiHealth({
-    checkOnLoad: true,
+  const { isHealthy, isLoading, setHealth } = useApiHealth({
+    checkOnLoad: false,
   });
+
+  const handleRetry = () => {
+    window.location.reload();
+  };
 
   if (isLoading) {
     return (
@@ -27,7 +31,7 @@ const QuickQuestions = () => {
     <>
       <UnhealthyApiModal
         isOpen={!isHealthy}
-        handleClose={checkApiHealth}
+        handleClose={handleRetry}
         withClose
       />
 

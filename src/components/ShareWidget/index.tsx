@@ -9,7 +9,11 @@ import Modal from '../Modal';
 
 const ShareWidget = () => {
   const [isOpened, setIsOpened] = useState(false);
-  const handleOpen = () => setIsOpened(true);
+  const [error, setError] = useState<string>();
+
+  const handleOpen = () => {
+    setIsOpened(true);
+  };
 
   const [email, setEmail] = useState('');
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,14 +31,22 @@ const ShareWidget = () => {
       content_url: window.location.href,
     });
 
-    await fetchMiddleware.fetch(`/share?${params.toString()}`, {
-      method: 'POST',
-    });
+    try {
+      await fetchMiddleware.fetch(`/share?${params.toString()}`, {
+        method: 'POST',
+      });
+    } catch (e) {
+      setError(e as string);
+    }
 
     setEmail('');
     setIsSubmitting(false);
     setIsOpened(false);
   };
+
+  if (error) {
+    throw new Error(error);
+  }
 
   return (
     <>
