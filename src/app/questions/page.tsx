@@ -6,11 +6,9 @@ export default async function Home() {
   return (
     <>
       <main className="flex justify-center pt-12">
-        <Container>
-          <Container className="w-72">
-            <Title className="self-start">Quick questions</Title>
-            <QuickQuestions />
-          </Container>
+        <Container className="max-w-[1720px] px-8">
+          <Title>Quick questions</Title>
+          <QuickQuestions />
         </Container>
       </main>
     </>

@@ -20,7 +20,7 @@ const UnhealthyApiModal = ({ isOpen, handleClose, withClose }: Props) => {
       <Button
         onClick={handleClose}
         variant={ButtonVariants.danger}
-        className="w-full"
+        className="w-full mt-4"
       >
         Try again
       </Button>

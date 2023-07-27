@@ -14,15 +14,13 @@ export class Fetch {
     this.prefetchUrl = props.prefetchUrl;
   }
 
-  async fetch<T>(url: string, options: RequestInit): Promise<T> {
+  async fetch<T>(url: string, options?: RequestInit): Promise<T> {
     if (this.prefetchUrl) {
       await this.healthCheck();
     }
 
     const link = this.baseUrl ? `${this.baseUrl}${url}` : url;
-    console.log('again', link);
     const res = await fetch(link, options);
-    console.log('other', res);
     return await res.json();
   }
 
