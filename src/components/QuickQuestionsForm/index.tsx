@@ -1,11 +1,15 @@
 import { useQuestions } from '@/hooks/useQuestions';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../Button';
 import Input from '../Input';
 import QuestionsList from '../QuestionsList';
 
-const QuickQuestionsForm = () => {
+type Props = {
+  onFail: () => void;
+};
+
+const QuickQuestionsForm = ({ onFail }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const mounted = useRef(false);
 
@@ -21,19 +25,38 @@ const QuickQuestionsForm = () => {
     setQuestion(value);
   };
 
-  const handleSearch = async () => {
+  const handleRequest = useCallback(
+    async (request: () => Promise<unknown> | void) => {
+      try {
+        return await request();
+      } catch (e) {
+        console.log('error');
+        onFail();
+        console.error(e);
+      }
+    },
+    [onFail]
+  );
+
+  const onSearch = async () => {
     if (!question) return;
 
-    await fetchNextPage();
+    handleRequest(() => handleSearch(question));
   };
 
-  const { questions, fetchNextPage } = useQuestions({ filter: question });
+  const { questions, fetchNextPage, isLoading, handleSearch } = useQuestions({
+    filter: question,
+  });
+
+  const onReachEnd = async () => {
+    handleRequest(fetchNextPage);
+  };
 
   useEffect(
     function setMounted() {
       const mount = async () => {
         if (!mounted.current) {
-          const fetched = await fetchNextPage();
+          const fetched = await handleRequest(fetchNextPage);
           console.log(fetched);
           mounted.current = !!fetched;
         }
@@ -41,7 +64,7 @@ const QuickQuestionsForm = () => {
 
       mount();
     },
-    [fetchNextPage]
+    [fetchNextPage, handleRequest]
   );
 
   useEffect(
@@ -69,14 +92,18 @@ const QuickQuestionsForm = () => {
         <Button
           className="w-full h-10 mt-4"
           isLoading={false}
-          onClick={handleSearch}
+          onClick={onSearch}
         >
           Search
         </Button>
       </form>
 
       <div className="flex justify-center mt-8 px-44">
-        <QuestionsList questions={questions} />
+        <QuestionsList
+          questions={questions}
+          onReachEnd={onReachEnd}
+          isLoading={isLoading}
+        />
       </div>
     </>
   );

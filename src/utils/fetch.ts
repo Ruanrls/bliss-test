@@ -8,10 +8,12 @@ type FetchOptions = {
 export class Fetch {
   private readonly baseUrl: string | undefined;
   private readonly prefetchUrl: string | undefined;
+  private readonly abortController: AbortController;
 
   constructor(private props: FetchOptions) {
     this.baseUrl = props.baseUrl;
     this.prefetchUrl = props.prefetchUrl;
+    this.abortController = new AbortController();
   }
 
   async fetch<T>(url: string, options?: RequestInit): Promise<T> {
@@ -20,7 +22,10 @@ export class Fetch {
     }
 
     const link = this.baseUrl ? `${this.baseUrl}${url}` : url;
-    const res = await fetch(link, options);
+    const res = await fetch(link, {
+      ...options,
+      signal: this.abortController.signal,
+    });
     return await res.json();
   }
 
@@ -34,6 +39,7 @@ export class Fetch {
     const response = await fetch(link, {
       method: 'GET',
       cache: 'no-store',
+      signal: this.abortController.signal,
     });
     const body = await response.json();
     if (body.status !== APIStatus.OK) {
@@ -41,5 +47,10 @@ export class Fetch {
     }
 
     return true;
+  }
+
+  async abort(reason?: string) {
+    this.abortController.abort(reason);
+    return this.abortController.signal;
   }
 }

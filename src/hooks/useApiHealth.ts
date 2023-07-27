@@ -12,7 +12,7 @@ export const useApiHealth = (params: Props = {}) => {
   const mounted = useRef(false);
 
   const [isHealthy, setIsHealthy] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(!!checkOnLoad);
 
   useEffect(() => {
     if (!checkOnLoad || mounted.current) {
@@ -32,5 +32,9 @@ export const useApiHealth = (params: Props = {}) => {
     return isHealthy;
   };
 
-  return { isLoading, isHealthy, checkApiHealth };
+  const setHealth = (isHealthy: boolean) => {
+    setIsHealthy(isHealthy);
+  };
+
+  return { isLoading, isHealthy, checkApiHealth, setHealth };
 };

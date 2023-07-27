@@ -7,7 +7,7 @@ import QuickQuestionsForm from '../QuickQuestionsForm';
 import UnhealthyApiModal from '../UnhealthyApiModal';
 
 const QuickQuestions = () => {
-  const { isHealthy, isLoading, checkApiHealth } = useApiHealth({
+  const { isHealthy, isLoading, checkApiHealth, setHealth } = useApiHealth({
     checkOnLoad: true,
   });
 
@@ -33,7 +33,7 @@ const QuickQuestions = () => {
 
       <Container className="mt-4 w-">
         {isHealthy && <p className="text-center">api is online!</p>}
-        <QuickQuestionsForm />
+        <QuickQuestionsForm onFail={() => setHealth(false)} />
       </Container>
     </>
   );

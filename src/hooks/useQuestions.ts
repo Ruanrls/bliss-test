@@ -45,6 +45,7 @@ export const useQuestions = ({ filter }: UseQuestions = {}) => {
     }
 
     setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     const data = await fetchQuestions.next();
     if (data.done) return data;
 
@@ -52,6 +53,18 @@ export const useQuestions = ({ filter }: UseQuestions = {}) => {
     setIsLoading(false);
     return data;
   }, [fetchQuestions]);
+
+  const handleSearch = useCallback(async (filter: string) => {
+    const fetchQuestions = getPaginatedQuestions(DEFAULT_LIMIT, filter);
+    setFetchQuestions(fetchQuestions);
+    const data = await fetchQuestions.next();
+
+    if (data.done) {
+      return;
+    }
+
+    setQuestions(data.value);
+  }, []);
 
   useEffect(
     function createFetchQuestionsGenerator() {
@@ -64,5 +77,6 @@ export const useQuestions = ({ filter }: UseQuestions = {}) => {
     questions,
     isLoading,
     fetchNextPage,
+    handleSearch,
   };
 };
