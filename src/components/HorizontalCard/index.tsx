@@ -15,7 +15,7 @@ const HorizontalCard = ({
   return (
     <div
       className={classNames(
-        'flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow',
+        'flex flex-row items-center bg-gray-100 border border-gray-200 rounded-lg shadow-lg',
         { 'hover:bg-gray-100': changeColorOnHover }
       )}
     >
