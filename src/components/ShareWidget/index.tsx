@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import fetchMiddleware from '@/config/fetch';
 import Image from 'next/image';
 import { useState } from 'react';
